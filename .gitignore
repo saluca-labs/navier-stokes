@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# JHTDB working directories & large data blobs (reproducible from the public database)
+_giv/
+_d7_pool.npz
+*.npz
+
+# Run logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
