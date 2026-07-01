@@ -465,7 +465,8 @@ data, and this disclosure) are the basis for trust.
 ## Data and code availability
 
 DNS solver, JHTDB pipeline (`sciserver_cutout.py`), the 1D OSW model solver (`osw_1d.py`, `osw_frontier.py`),
-analysis and bootstrap scripts, and figure code are archived with this work. JHTDB datasets are public
+analysis and bootstrap scripts, and figure code are archived with this work and released under the MIT license
+at **https://github.com/saluca-labs/navier-stokes**. JHTDB datasets are public
 [JHTDB08]; the geometric-depletion statistic and the per-snapshot audit of §6 are reproducible from them.
 
 ## References
