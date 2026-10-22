@@ -58,6 +58,52 @@ direction), but once the measured resolution bias is applied that difference is 
 statistically resolved** at top-1% (suggestive at top-0.1%). Reported as a two-point comparison,
 **not** a scaling law; the deepest tail (top-0.01%) is resolution-limited.
 
+**Where each number comes from.** The tail ratios are re-derived by
+[`code/sciserver_cutout.py`](code/sciserver_cutout.py) (pools of `w2`, `P`, `den` per grid point from
+JHTDB), the 95% t-intervals by [`code/block_uncertainty.py`](code/block_uncertainty.py), the
+resolution-bias correction by [`code/coarse_grain_run.py`](code/coarse_grain_run.py) (paper §6.1),
+and Fig. 2 by [`code/plot_crossRe.py`](code/plot_crossRe.py). The per-point pools (`.npz`) are not in
+this repository; they are regenerated from the public JHTDB fields (see [Data](#data)). The archived
+record is the concept DOI [10.5281/zenodo.20970675](https://doi.org/10.5281/zenodo.20970675).
+
+## How it works
+
+The production data path, traced from the scripts on `master` (every box is a file, every arrow a
+call, subprocess or file the script reads or writes):
+
+```mermaid
+flowchart LR
+  J[("JHTDB velocity fields<br/>isotropic8192, isotropic32768")]
+  M["code/master_ns_run.py<br/>main, step"]
+  G["code/fd_vs_spectral.py<br/>FD vs spectral gradient gate"]
+  C["code/sciserver_cutout.py<br/>cutout_field, depletion_of_box"]
+  P[("pool_cutout_DATASET.npz<br/>w2, P, den, nb")]
+  R[("MASTER_RESULTS.md<br/>captured stdout of each step")]
+  CG["code/coarse_grain_run.py<br/>V0 to V3 filter variants"]
+  CP[("pool_cgrain_VARIANT_isotropic32768.npz<br/>and CGRAIN_RESULTS.md")]
+  BU["code/block_uncertainty.py<br/>batch-means t-intervals"]
+  AP["code/analyze_pool.py<br/>tail/mean ratio curve"]
+  PL["code/plot_crossRe.py"]
+  F["paper/depletion_crossRe.png"]
+
+  M -- "subprocess, Stage 1" --> G
+  M -- "subprocess, Stage 2" --> C
+  M --> R
+  J -- "getCutout, getData" --> G
+  J -- "getCutout" --> C
+  J -- "getCutout" --> CG
+  C -- "np.savez after every box" --> P
+  CG --> CP
+  P --> BU
+  P --> AP
+  P --> PL
+  PL -- "savefig" --> F
+```
+
+`block_uncertainty.py` and `analyze_pool.py` print to stdout; `fd_vs_spectral.py` prints only, and
+`master_ns_run.py` captures that output into `MASTER_RESULTS.md`. `master_ns_run.py` runs the two
+stages one after the other; no file passes from the gate to the cutout run.
+
 ## Install
 
 Tested 2026-10-22 for the CPU-only models on Python 3.12.10 with numpy 2.4.6, scipy 1.17.1 and
@@ -140,9 +186,70 @@ code/     DNS solver, JHTDB pipeline, 1D model, analysis, bootstrap, figure code
 | `d3_rescan.py`, `d4_extreme.py`, `d5_decisive.py`, `e2*.py` | Exploratory percentile / extreme-tail scans (research trail) |
 | `*_results.md`, `RESULTS.md` | Run provenance |
 
-The production path is `master_ns_run.py` → `fd_vs_spectral.py` (gradient-method gate) →
-`sciserver_cutout.py` (pools of `w2`, `P`, `den` per point) → `block_uncertainty.py` /
-`analyze_pool.py` → `plot_crossRe.py`.
+The production path is drawn under [How it works](#how-it-works). The diagram below groups every
+script by what it needs to run, traced from its imports and the files it reads and writes:
+
+```mermaid
+flowchart TB
+  subgraph SCI["JHTDB access (giverny or givernylocal)"]
+    direction TB
+    MR["master_ns_run.py"]
+    FD["fd_vs_spectral.py<br/>giverny only"]
+    SC["sciserver_cutout.py"]
+    SD["sciserver_depletion.py"]
+    CGR["coarse_grain_run.py"]
+    NJ["ns_jhtdb.py<br/>givernylocal"]
+    D7["d7_jhtdb_batch.py<br/>givernylocal"]
+  end
+  subgraph GPU["CUDA GPU (PyTorch)"]
+    direction TB
+    DS["dns_spectral.py"]
+    DI["dns_instrumented.py"]
+    D3["d3_rescan.py"]
+    D4["d4_extreme.py"]
+    D5["d5_decisive.py"]
+  end
+  subgraph CPU["CPU only"]
+    direction TB
+    SH["shell_model.py"]
+    E2["e2_delay.py, e2b_relay.py, e2c_highres.py"]
+    OS["osw_1d.py, osw_frontier.py"]
+    BU2["block_uncertainty.py"]
+    AP2["analyze_pool.py"]
+    PC["plot_crossRe.py"]
+    PD["plot_depletion.py"]
+  end
+
+  MR -- subprocess --> FD
+  MR -- subprocess --> SC
+  D5 -- "import d4_extreme, run_case" --> D4
+  SC --> PCP[("pool_cutout_DATASET.npz")]
+  SD --> PSD[("pool_DATASET.npz")]
+  PCP --> BU2
+  PCP --> AP2
+  PCP --> PC
+  PSD --> AP2
+  PSD --> PD
+  OS -- "overwrites" --> OSR[("code/osw_results*.md")]
+```
+
+The pools move from the JHTDB side to the CPU side as downloaded files; nothing in the repository
+transfers them. The CPU scripts need only numpy, scipy and matplotlib. `d7_jhtdb_batch.py` writes
+the git-ignored `code/_d7_pool.npz`, and `d5_decisive.py` writes `experiments/d5_result.txt`, a directory that is not in the
+repository.
+
+### In this repository and not in it
+
+| Layer | In this repo | Where it lives |
+|---|---|---|
+| Paper v0.6 (Markdown, PDF, Fig. 2) | yes | [`paper/`](paper/); archived at the concept DOI |
+| Solvers, pipeline, analysis and figure code | yes | [`code/`](code/), MIT |
+| Run logs of the CPU and exploratory experiments | yes | [`code/RESULTS.md`](code/RESULTS.md), `code/osw_*results*.md` |
+| Turbulence fields | no | Johns Hopkins Turbulence Database, read through `giverny` |
+| Per-point pools (`.npz`), `MASTER_RESULTS.md`, `CGRAIN_RESULTS.md` | no | written by the scripts at run time; `*.npz` and `*.log` are git-ignored |
+| Fig. 1 source image (`experiments/depletion_ratio_vs_Re.png`) | no | referenced by the paper Markdown, not committed |
+
+A map of every document, grouped by what it answers, is in [`docs/README.md`](docs/README.md).
 
 ## Data
 
@@ -164,6 +271,15 @@ statistic and the per-snapshot audit are reproducible directly from them - no pr
 - The per-box pool is checkpointed as an `.npz` that is rewritten whole each box: **never analyze a
   pool `.npz` while a run is in progress** (it will be a torn/corrupt read). Read the result from the
   `MASTER_RESULTS.md` / `CUTOUT FINAL` log line instead.
+- `plot_crossRe.py` opens `pool_cutout_isotropic8192(2).npz` and `pool_cutout_isotropic32768(2).npz`
+  (with the `(2)` suffix) in `NS_POOL_DIR`, while `sciserver_cutout.py` writes
+  `pool_cutout_<dataset>.npz`. Rename the pools, or the script fails on open.
+- **Known discrepancy, found 2026-10-22:** `plot_crossRe.py` still draws the Fig. 2 bands with the
+  normal multiplier (`1.96 * sem`) and its docstring calls them "block-resampled". Paper v0.6 states
+  that the tabulated intervals use `t_19 = 2.093` (about 7% wider); `block_uncertainty.py` uses the t
+  multiplier. The bands in `paper/depletion_crossRe.png` are therefore about 7% narrower than the
+  corrected intervals in the paper's table. The code and figure are unchanged here; the fix is
+  pending.
 
 ## Screenshots
 

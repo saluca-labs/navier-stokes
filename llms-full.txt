@@ -4,9 +4,13 @@
 
 This is a set of research scripts, not a library. It does not claim to settle Navier-Stokes regularity. The v0.6 result: extreme-tail depletion is below unity at both R_lambda about 1300 and 2500, and the cross-Reynolds weakening is NOT statistically resolved at top-1% after the measured resolution bias (the v0.5 "statistically resolved" claim was withdrawn). The DNS needs a CUDA GPU (no CPU fallback); the production pipeline needs JHTDB access via giverny/SciServer; the per-point pools (.npz) are not in the repo. shell_model.py and osw_1d.py run on a CPU with numpy and scipy.
 
+The scripts listed under "Code" are the complete public surface: there is no package, no installed command, no API and no test suite. If a script, command or option is not listed here or in the README's Usage table, it does not exist. Known discrepancy (2026-10-22): code/plot_crossRe.py draws the Fig. 2 bands with 1.96 rather than the t multiplier the v0.6 paper uses for its table.
+
+The full text of this repository's prose docs, concatenated, each under its path. Regenerate this file whenever one of them changes.
+
 ## README.md
 
-# Geometric depletion of enstrophy production in the extreme vorticity tail
+### Geometric depletion of enstrophy production in the extreme vorticity tail
 
 **A Reynolds-number study toward the Navier-Stokes regularity question.** Reproducibility package
 (DNS solver, JHTDB pipeline, 1D and shell models, analysis and figure code) for readers who want to
@@ -24,7 +28,7 @@ The paper itself (Markdown + PDF, v0.6 dated 2026-07-01) is in [`paper/`](paper/
 
 ---
 
-## Status
+#### Status
 
 Research artifact. The code on `master` matches paper v0.6 (commit of 2026-07-01). The scripts are
 the instruments that produced the paper's numbers, not a packaged library; most need either a CUDA
@@ -41,7 +45,7 @@ GPU (the DNS) or JHTDB access (the production pipeline).
 > README also cited the v0.5 version DOI (10.5281/zenodo.21084339); it now cites the concept DOI.
 > The main result below is the v0.6 statement.
 
-## What this is
+#### What this is
 
 The global regularity of the 3D incompressible Navier-Stokes equations turns on whether
 vortex stretching can drive the enstrophy to infinity in finite time. A classical
@@ -66,7 +70,53 @@ direction), but once the measured resolution bias is applied that difference is 
 statistically resolved** at top-1% (suggestive at top-0.1%). Reported as a two-point comparison,
 **not** a scaling law; the deepest tail (top-0.01%) is resolution-limited.
 
-## Install
+**Where each number comes from.** The tail ratios are re-derived by
+[`code/sciserver_cutout.py`](code/sciserver_cutout.py) (pools of `w2`, `P`, `den` per grid point from
+JHTDB), the 95% t-intervals by [`code/block_uncertainty.py`](code/block_uncertainty.py), the
+resolution-bias correction by [`code/coarse_grain_run.py`](code/coarse_grain_run.py) (paper §6.1),
+and Fig. 2 by [`code/plot_crossRe.py`](code/plot_crossRe.py). The per-point pools (`.npz`) are not in
+this repository; they are regenerated from the public JHTDB fields (see [Data](#data)). The archived
+record is the concept DOI [10.5281/zenodo.20970675](https://doi.org/10.5281/zenodo.20970675).
+
+#### How it works
+
+The production data path, traced from the scripts on `master` (every box is a file, every arrow a
+call, subprocess or file the script reads or writes):
+
+```mermaid
+flowchart LR
+  J[("JHTDB velocity fields<br/>isotropic8192, isotropic32768")]
+  M["code/master_ns_run.py<br/>main, step"]
+  G["code/fd_vs_spectral.py<br/>FD vs spectral gradient gate"]
+  C["code/sciserver_cutout.py<br/>cutout_field, depletion_of_box"]
+  P[("pool_cutout_DATASET.npz<br/>w2, P, den, nb")]
+  R[("MASTER_RESULTS.md<br/>captured stdout of each step")]
+  CG["code/coarse_grain_run.py<br/>V0 to V3 filter variants"]
+  CP[("pool_cgrain_VARIANT_isotropic32768.npz<br/>and CGRAIN_RESULTS.md")]
+  BU["code/block_uncertainty.py<br/>batch-means t-intervals"]
+  AP["code/analyze_pool.py<br/>tail/mean ratio curve"]
+  PL["code/plot_crossRe.py"]
+  F["paper/depletion_crossRe.png"]
+
+  M -- "subprocess, Stage 1" --> G
+  M -- "subprocess, Stage 2" --> C
+  M --> R
+  J -- "getCutout, getData" --> G
+  J -- "getCutout" --> C
+  J -- "getCutout" --> CG
+  C -- "np.savez after every box" --> P
+  CG --> CP
+  P --> BU
+  P --> AP
+  P --> PL
+  PL -- "savefig" --> F
+```
+
+`block_uncertainty.py` and `analyze_pool.py` print to stdout; `fd_vs_spectral.py` prints only, and
+`master_ns_run.py` captures that output into `MASTER_RESULTS.md`. `master_ns_run.py` runs the two
+stages one after the other; no file passes from the gate to the cutout run.
+
+#### Install
 
 Tested 2026-10-22 for the CPU-only models on Python 3.12.10 with numpy 2.4.6, scipy 1.17.1 and
 matplotlib 3.10.9. There is no package; clone and install what the script you want needs:
@@ -85,7 +135,7 @@ python -m pip install numpy scipy matplotlib     # shell model, 1D OSW model, an
   `master_ns_run.py`): the `giverny` package inside a SciServer container, or `givernylocal`
   elsewhere (`ns_jhtdb.py`, `d7_jhtdb_batch.py`). Not run in the 2026-10-22 check.
 
-## Quickstart
+#### Quickstart
 
 The shell-model dissipation-threshold experiment runs on a CPU in about 6 seconds:
 
@@ -106,7 +156,7 @@ Last lines of the output from a run on 2026-10-22 (full capture in
 This matches experiment E1 in [`code/RESULTS.md`](code/RESULTS.md) (blow-up at t ≈ 1.69; the
 supercritical case stalls at shell 12 with enstrophy about 76).
 
-## Usage
+#### Usage
 
 | command | what it does | checked 2026-10-22 |
 |---|---|---|
@@ -122,16 +172,16 @@ supercritical case stalls at shell 12 with enstrophy about 76).
 `osw_1d.py` and `osw_frontier.py` overwrite the tracked `code/osw_results*.md` files next to them;
 copy the scripts elsewhere if you want to keep the archived results.
 
-## Repository layout
+#### Repository layout
 
 ```
 paper/    the paper (.md + .pdf) and the cross-Reynolds figure
 code/     DNS solver, JHTDB pipeline, 1D model, analysis, bootstrap, figure code
 ```
 
-## Architecture
+#### Architecture
 
-### Key scripts (`code/`)
+##### Key scripts (`code/`)
 
 | File | Role |
 |------|------|
@@ -148,11 +198,72 @@ code/     DNS solver, JHTDB pipeline, 1D model, analysis, bootstrap, figure code
 | `d3_rescan.py`, `d4_extreme.py`, `d5_decisive.py`, `e2*.py` | Exploratory percentile / extreme-tail scans (research trail) |
 | `*_results.md`, `RESULTS.md` | Run provenance |
 
-The production path is `master_ns_run.py` → `fd_vs_spectral.py` (gradient-method gate) →
-`sciserver_cutout.py` (pools of `w2`, `P`, `den` per point) → `block_uncertainty.py` /
-`analyze_pool.py` → `plot_crossRe.py`.
+The production path is drawn under [How it works](#how-it-works). The diagram below groups every
+script by what it needs to run, traced from its imports and the files it reads and writes:
 
-## Data
+```mermaid
+flowchart TB
+  subgraph SCI["JHTDB access (giverny or givernylocal)"]
+    direction TB
+    MR["master_ns_run.py"]
+    FD["fd_vs_spectral.py<br/>giverny only"]
+    SC["sciserver_cutout.py"]
+    SD["sciserver_depletion.py"]
+    CGR["coarse_grain_run.py"]
+    NJ["ns_jhtdb.py<br/>givernylocal"]
+    D7["d7_jhtdb_batch.py<br/>givernylocal"]
+  end
+  subgraph GPU["CUDA GPU (PyTorch)"]
+    direction TB
+    DS["dns_spectral.py"]
+    DI["dns_instrumented.py"]
+    D3["d3_rescan.py"]
+    D4["d4_extreme.py"]
+    D5["d5_decisive.py"]
+  end
+  subgraph CPU["CPU only"]
+    direction TB
+    SH["shell_model.py"]
+    E2["e2_delay.py, e2b_relay.py, e2c_highres.py"]
+    OS["osw_1d.py, osw_frontier.py"]
+    BU2["block_uncertainty.py"]
+    AP2["analyze_pool.py"]
+    PC["plot_crossRe.py"]
+    PD["plot_depletion.py"]
+  end
+
+  MR -- subprocess --> FD
+  MR -- subprocess --> SC
+  D5 -- "import d4_extreme, run_case" --> D4
+  SC --> PCP[("pool_cutout_DATASET.npz")]
+  SD --> PSD[("pool_DATASET.npz")]
+  PCP --> BU2
+  PCP --> AP2
+  PCP --> PC
+  PSD --> AP2
+  PSD --> PD
+  OS -- "overwrites" --> OSR[("code/osw_results*.md")]
+```
+
+The pools move from the JHTDB side to the CPU side as downloaded files; nothing in the repository
+transfers them. The CPU scripts need only numpy, scipy and matplotlib. `d7_jhtdb_batch.py` writes
+the git-ignored `code/_d7_pool.npz`, and `d5_decisive.py` writes `experiments/d5_result.txt`, a directory that is not in the
+repository.
+
+##### In this repository and not in it
+
+| Layer | In this repo | Where it lives |
+|---|---|---|
+| Paper v0.6 (Markdown, PDF, Fig. 2) | yes | [`paper/`](paper/); archived at the concept DOI |
+| Solvers, pipeline, analysis and figure code | yes | [`code/`](code/), MIT |
+| Run logs of the CPU and exploratory experiments | yes | [`code/RESULTS.md`](code/RESULTS.md), `code/osw_*results*.md` |
+| Turbulence fields | no | Johns Hopkins Turbulence Database, read through `giverny` |
+| Per-point pools (`.npz`), `MASTER_RESULTS.md`, `CGRAIN_RESULTS.md` | no | written by the scripts at run time; `*.npz` and `*.log` are git-ignored |
+| Fig. 1 source image (`experiments/depletion_ratio_vs_Re.png`) | no | referenced by the paper Markdown, not committed |
+
+A map of every document, grouped by what it answers, is in [`docs/README.md`](docs/README.md).
+
+#### Data
 
 The turbulence fields are the public **Johns Hopkins Turbulence Database** (JHTDB), datasets
 `isotropic8192` and `isotropic32768`, accessed via `giverny` / SciServer. The geometric-depletion
@@ -165,22 +276,31 @@ statistic and the per-snapshot audit are reproducible directly from them - no pr
   `export JHTDB_TOKEN=...` (a placeholder `YOUR_REGISTERED_JHTDB_TOKEN` appears in the docs/help text).
 - Register at <https://turbulence.pha.jhu.edu/>.
 
-### Reproduction notes / gotchas
+##### Reproduction notes / gotchas
 
 - Production cutouts run on SciServer; `getCutout` with `B=128` hangs on the `isotropic32768`
   cube - use `B=64`.
 - The per-box pool is checkpointed as an `.npz` that is rewritten whole each box: **never analyze a
   pool `.npz` while a run is in progress** (it will be a torn/corrupt read). Read the result from the
   `MASTER_RESULTS.md` / `CUTOUT FINAL` log line instead.
+- `plot_crossRe.py` opens `pool_cutout_isotropic8192(2).npz` and `pool_cutout_isotropic32768(2).npz`
+  (with the `(2)` suffix) in `NS_POOL_DIR`, while `sciserver_cutout.py` writes
+  `pool_cutout_<dataset>.npz`. Rename the pools, or the script fails on open.
+- **Known discrepancy, found 2026-10-22:** `plot_crossRe.py` still draws the Fig. 2 bands with the
+  normal multiplier (`1.96 * sem`) and its docstring calls them "block-resampled". Paper v0.6 states
+  that the tabulated intervals use `t_19 = 2.093` (about 7% wider); `block_uncertainty.py` uses the t
+  multiplier. The bands in `paper/depletion_crossRe.png` are therefore about 7% narrower than the
+  corrected intervals in the paper's table. The code and figure are unchanged here; the fix is
+  pending.
 
-## Screenshots
+#### Screenshots
 
 ![Terminal output of code/shell_model.py: the inviscid and subcritical cases blow up at t about 1.69, the supercritical case stays regular to t=40 with the cascade front stalled at shell 12](docs/img/shell-model-threshold-2026-10-22.png)
 
 Captured 2026-10-22 from a clean clone; command and captured text in
 [`docs/img/shell-model-threshold-2026-10-22.txt`](docs/img/shell-model-threshold-2026-10-22.txt).
 
-## Provenance & method
+#### Provenance & method
 
 This is a human-validated, AI-accelerated research artifact. An agentic large-language-model system
 (operated by Saluca Labs) performed literature mapping, code authoring, and closed-loop analysis;
@@ -188,17 +308,17 @@ every quantitative claim rests on the human-validated, reproducible artifacts in
 result is treated as established solely because an AI produced it. See the paper's *Provenance* and
 *Data and code availability* sections for the full disclosure.
 
-## Citation
+#### Citation
 
 Cite the paper by its Zenodo concept DOI,
 [10.5281/zenodo.20970675](https://doi.org/10.5281/zenodo.20970675), which resolves to the latest
 version. [`CITATION.cff`](CITATION.cff) carries the same DOI.
 
-## License
+#### License
 
 [MIT](LICENSE) (SPDX `MIT`) © 2026 Cristian Ruvalcaba / Saluca Labs.
 
-## Links
+#### Links
 
 - Paper (this repo): [`paper/geometric_depletion_paper.md`](paper/geometric_depletion_paper.md),
   [`paper/geometric_depletion_paper.pdf`](paper/geometric_depletion_paper.pdf)
@@ -207,6 +327,135 @@ version. [`CITATION.cff`](CITATION.cff) carries the same DOI.
 - Johns Hopkins Turbulence Database: https://turbulence.pha.jhu.edu/
 
 _Last updated: 2026-10-22_
+
+## AGENTS.md
+
+### AGENTS.md
+
+Instructions for AI coding agents working in this repository.
+
+#### What this is
+
+The reproducibility package for the paper "Geometric depletion of enstrophy production in the
+extreme vorticity tail" (v0.6). Research scripts that produced the paper's numbers, not a library.
+
+#### Read in this order
+
+1. [`README.md`](README.md): the v0.6 result, its 2026-10-22 correction note, and the data path diagram.
+2. [`code/sciserver_cutout.py`](code/sciserver_cutout.py): the production measurement (`depletion_of_box`).
+3. [`code/block_uncertainty.py`](code/block_uncertainty.py): how the 95% intervals are computed.
+4. [`code/coarse_grain_run.py`](code/coarse_grain_run.py): the v0.6 resolution-bias experiment.
+5. [`paper/geometric_depletion_paper.md`](paper/geometric_depletion_paper.md): methods and change log.
+
+#### What you can and cannot see
+
+- You can read and run every script in `code/`. `shell_model.py`, `osw_1d.py`, `osw_frontier.py` and
+  `e2*.py` run on a CPU.
+- You cannot reproduce the production numbers from this repository alone. The per-point pools
+  (`.npz`) are not committed, and regenerating them needs JHTDB access through `giverny` (SciServer)
+  or `givernylocal`, with a registered `JHTDB_TOKEN` for full statistics.
+- The DNS scripts (`dns_*.py`, `d3_rescan.py`, `d4_extreme.py`, `d5_decisive.py`) need PyTorch with
+  CUDA and have no CPU fallback.
+- `experiments/` is referenced by the paper and by `d5_decisive.py` but is not in the repository.
+
+#### The only numbers to trust
+
+- The main result (tail ratios, intervals, the resolution-bias correction): the v0.6 paper,
+  [`paper/geometric_depletion_paper.md`](paper/geometric_depletion_paper.md), sections 6 and 6.1.
+  The README's "Main result (v0.6)" restates it.
+- The shell-model verdict: [`code/RESULTS.md`](code/RESULTS.md) experiment E1, reproduced by
+  `python code/shell_model.py` (captured in `docs/img/shell-model-threshold-2026-10-22.txt`).
+- Not to trust: any v0.5 statement that the cross-Reynolds difference is "statistically resolved"
+  (withdrawn in v0.6), the title string in `code/plot_crossRe.py`, and the Fig. 2 bands, which use
+  `1.96` rather than the t multiplier (see the README's reproduction notes).
+
+#### Setup
+
+```bash
+python -m pip install numpy scipy matplotlib
+```
+
+Python 3.12. The DNS scripts also need PyTorch with CUDA; the JHTDB scripts need `giverny`
+(SciServer) or `givernylocal`. On Windows set `PYTHONIOENCODING=utf-8`.
+
+#### Test
+
+There is no test suite. The CPU check, from the repository root:
+
+```bash
+python code/shell_model.py
+```
+
+Passing looks like the verdict block: `gamma=0.00: BLOW-UP`, `gamma=0.15: BLOW-UP`,
+`gamma=0.50: REGULAR (t_end=40.0000)`.
+
+#### Conventions
+
+- numpy, scipy, matplotlib (and torch / giverny where already used); do not add dependencies.
+- Paths are relative to the script or come from environment variables; never hardcode a machine path.
+- The JHTDB token comes from `JHTDB_TOKEN`; only the public testing token may appear in code.
+- No em-dashes in docs.
+
+#### Do not
+
+- Edit `paper/` or the archived `code/*_results.md` / `RESULTS.md` except as a dated correction.
+  `osw_1d.py` and `osw_frontier.py` overwrite their results files; run copies elsewhere.
+- Commit `.npz` pools, logs, or a registered JHTDB token.
+- Commit secrets, hostnames, internal paths or personal emails.
+
+#### Done means
+
+The CPU check above passes, any script you touched still compiles (`python -m py_compile`), and if
+README.md, the paper, RESULTS.md or anything under `docs/` changed, `llms-full.txt` is regenerated in
+the same change.
+
+## docs/README.md
+
+### Documentation map
+
+Every document in this repository, grouped by what you want to know. One line each on what it
+answers.
+
+#### Start here
+
+- [README](../README.md): what the study measures, the v0.6 result and its correction, install,
+  the CPU quickstart, and the production data path diagram.
+- [AGENTS.md](../AGENTS.md): orientation for an AI agent working in the repository.
+
+#### The result, in depth
+
+- [Paper, Markdown](../paper/geometric_depletion_paper.md): the v0.6 paper, methods, tables and
+  change log. The figure it draws from code is [`paper/depletion_crossRe.png`](../paper/depletion_crossRe.png).
+- [Paper, PDF](../paper/geometric_depletion_paper.pdf): the typeset v0.6.
+- Archived record: concept DOI [10.5281/zenodo.20970675](https://doi.org/10.5281/zenodo.20970675),
+  which resolves to the latest version.
+
+#### Run logs (archived output, do not edit except as a dated correction)
+
+- [code/RESULTS.md](../code/RESULTS.md): dated log of the exploratory experiments (E1 shell model,
+  E2 delay and relay variants, D1 to D5 GPU DNS scans).
+- [code/osw_results_sin.md](../code/osw_results_sin.md),
+  [code/osw_results_tri.md](../code/osw_results_tri.md) and
+  [code/osw_results.md](../code/osw_results.md): archived 1D OSW model scans (outcome, blow-up time
+  and peak vorticity per advection strength `a`). The current `osw_1d.py` writes
+  `osw_results_<ic>.md` for its `--ic` value (default `sin`); `osw_results.md` predates that naming,
+  and the header of `osw_results_tri.md` records `data=sin(x)`, so read each file's own header for
+  the initial condition it used.
+- [code/osw_frontier_results.md](../code/osw_frontier_results.md): low-Hölder data for De Gregorio,
+  written by `osw_frontier.py`.
+
+#### Reproduce or build on it
+
+- [README, Usage](../README.md#usage): each script with a real command and whether it was run.
+- [README, Data](../README.md#data): JHTDB access, the token, and the reproduction gotchas.
+- [README, Architecture](../README.md#architecture): which scripts need JHTDB, a CUDA GPU, or only
+  a CPU, and what is not in this repository.
+- [CITATION.cff](../CITATION.cff): how to cite.
+
+#### Images
+
+- [docs/img/shell-model-threshold-2026-10-22.png](img/shell-model-threshold-2026-10-22.png): captured
+  output of `python code/shell_model.py`; the command and text are in the matching `.txt`.
 
 ## paper/geometric_depletion_paper.md
 
@@ -237,7 +486,7 @@ our scan reproduces. A full change log is given before the references.*
 
 ---
 
-## Abstract
+#### Abstract
 
 The global regularity of the three-dimensional incompressible Navier–Stokes equations turns on whether the
 vortex-stretching term can drive the enstrophy to infinity in finite time. A classical obstruction to blow-up
@@ -279,7 +528,7 @@ and a decidable 1D-model illustration of the depletion mechanism (§7).
 
 ---
 
-## 1. Introduction
+#### 1. Introduction
 
 The Millennium Problem for 3D incompressible Navier–Stokes asks whether smooth, finite-energy initial data can
 develop a singularity in finite time, or whether solutions remain smooth for all time. The Beale–Kato–Majda
@@ -324,7 +573,7 @@ priority on the Reynolds trend itself [BBP20, BPBY19, BP22]; our contribution is
 statistic with explicit uncertainty discipline, the measured resolution systematic, and the $R_\lambda=2500$
 datum.
 
-## 2. The geometric-depletion statistic
+#### 2. The geometric-depletion statistic
 
 Let $A_{ij}=\partial_j u_i$ be the velocity-gradient tensor, $S=\tfrac12(A+A^\top)$ the strain-rate tensor, and
 $\omega=\nabla\times u$ the vorticity. The pointwise enstrophy production is $P=\omega_i S_{ij}\omega_j$ and the
@@ -350,7 +599,7 @@ the **conditional** version: restrict the averages to the top-$q$ fraction of po
 form the ratio $D(q)/D_{\rm mean}$. A ratio **below 1** means the extreme tail is *more* depleted than the bulk
 (regularizing); a ratio **above 1** means extreme **de-depletion** (the singularity-relevant direction).
 
-## 3. Methods
+#### 3. Methods
 
 **3.1 In-house DNS.** A standard Fourier pseudospectral solver (rotational form, $2/3$ dealiasing, exact Leray
 projection, RK4 time stepping) integrates the incompressible NS equations on a triply periodic box, GPU-resident
@@ -396,7 +645,7 @@ contradiction.) At the **top-$0.01\%$** the stencils scatter $5$–$9\%$ and the
 between the two datasets — the signature of a noise-limited comparison at $\sim\!50$ tail points per method with
 independently selected tails — so we do not claim the gradient is resolved at top-$0.01\%$ or below.
 
-## 4. Results — validation and the moderate-Reynolds arc
+#### 4. Results — validation and the moderate-Reynolds arc
 
 **4.1 Alignment and mean depletion.** The in-house DNS reproduces the canonical PDF of the cosine between
 $\omega$ and the strain eigenvectors, peaked on the **intermediate** eigenvector, and a mean depletion
@@ -415,7 +664,7 @@ the higher Re, which would exaggerate exactly this apparent strengthening. An ap
 low-Reynolds transient, and a
 $512^3$ control confirmed it was **not** a resolution artifact.
 
-## 5. Results — high-Reynolds isotropic baseline ($R_\lambda\approx433$)
+#### 5. Results — high-Reynolds isotropic baseline ($R_\lambda\approx433$)
 
 Direct analysis of JHTDB `isotropic1024coarse` ($4.1\times10^5$ points) gives $D_{\rm mean}=0.117$ and tail
 ratios whose point estimates decrease into the tail (statistical uncertainty quantified below):
@@ -447,7 +696,7 @@ program of §9. This is the same convergence wall reaching even the most accessi
 
 ![Geometric-depletion ratio $D(q)/D_{\rm mean}$ versus vorticity percentile at $R_\lambda\approx433$ (JHTDB `isotropic1024coarse`, $4.1\times10^5$ points). The ratio stays **below** the de-depletion threshold (dashed line at 1.0) and *decreases* into the extreme tail — i.e. the most intense vorticity is the most geometrically depleted (regularizing). The high-statistics $R_\lambda\approx1300$ and $R_\lambda=2500$ curves are resolved in §6 (Fig. 2).](../experiments/depletion_ratio_vs_Re.png){width=82%}
 
-## 6. The high-Reynolds tail, resolved: $R_\lambda\approx1300$ and $R_\lambda=2500$
+#### 6. The high-Reynolds tail, resolved: $R_\lambda\approx1300$ and $R_\lambda=2500$
 
 The prior revision of this paper reported a *cautionary null* here: at $\sim\!5\times10^5$ points the
 `isotropic8192` extreme tail would not converge, and a data-provenance audit showed the dataset must be treated
@@ -524,7 +773,7 @@ sensitive (§6.1). The direction — milder geometric depletion of the extreme t
 what Buaria, Pumir and co-workers report from independent, better-resolved DNS [BBP20, BPBY19, BP22]; our data
 are consistent with that trend but do not independently establish it.
 
-### 6.1 The resolution bias, measured: a paired coarse-graining experiment (new in v0.6)
+##### 6.1 The resolution bias, measured: a paired coarse-graining experiment (new in v0.6)
 
 v0.5 *argued* that the resolution confound was conservative — that under-resolution smooths tail/bulk contrast
 and pushes the conditional ratio toward 1, so the coarser `isotropic8192` would read artificially *less*
@@ -575,7 +824,7 @@ cross-$R_\lambda$ ordering on a $\sim\!300\times$ smaller sample — a disagreem
 not fully decomposed — is itself a reminder that the second-decimal comparison is at the edge of what this
 data supports.
 
-## 7. Model-problem illustration: advection depletes blow-up (1D OSW family)
+#### 7. Model-problem illustration: advection depletes blow-up (1D OSW family)
 
 The 3D measurement is statistical and indirect — forced isotropic turbulence is a proxy, not a blow-up
 scenario (§10). To exhibit the *same* competition — nonlinear stretching versus depleting transport — in a
@@ -644,7 +893,7 @@ delays and then removes the finite-time blow-up, with the blow-up-time divergenc
 3D question (§5–6) is whether the geometric depletion survives into the extreme tail at high Reynolds number
 (§6) — a statistical question the 1D model cannot answer.
 
-## 8. Discussion
+#### 8. Discussion
 
 At $R_\lambda\approx433$ the *mean* depletion is firmly established and the tail point estimates indicate a
 regularizing tendency (ratio $\approx0.77$–$0.81$ in the large sample, decreasing into the tail), though the
@@ -666,7 +915,7 @@ to be non-conservative; and the deepest tail (top-$0.01\%$) is not gradient-reso
 this bears on blow-up directly: these are statistically steady forced flows, not a putative self-similar
 collapse; the measurement quantifies a geometric *trend*, not a singularity.
 
-## 9. Completed measurements and what remains
+#### 9. Completed measurements and what remains
 
 The high-statistics program of the prior revision has been executed (a standard JHTDB authorization token lifts
 the 4096-point testing cap):
@@ -699,7 +948,7 @@ What remains, and would convert the two-point comparison into a trend:
 7. **Conditioning.** Resolve $D$ jointly on $|\omega|$ and $|S|$, and on the local strain-state ($R$–$Q$
    invariants), to identify *which* extreme events de-deplete.
 
-## 10. Limitations
+#### 10. Limitations
 
 (i) Forced statistically-steady isotropic turbulence is a proxy for the regularity question, not a blow-up
 scenario. (ii) The high-Reynolds results resolve the top-$1\%$ and top-$0.1\%$ but **not** the
@@ -719,7 +968,7 @@ them, so we rely on the *bulk-vs-tail ratio* as the within-dataset discriminator
 measurement is an a-priori filtering test at $R_\lambda=2500$, transferred to the $R_\lambda\approx1300$ point;
 it is not a substitute for a genuinely resolution-matched dataset pair.
 
-## 11. Conclusion
+#### 11. Conclusion
 
 We have built and validated an apparatus that measures the percentile-resolved geometric depletion of enstrophy
 production across Reynolds number, reproduced the canonical alignment, and firmly established the mean depletion
@@ -743,7 +992,7 @@ demoted Reynolds comparison, the $R_\lambda\approx433$ baseline, the 1D-model il
 self-audited account — including its own published errata — that holds each claim to the depth the data
 support.
 
-## 12. Methodology note: an AI-augmented, consumer-hardware research apparatus
+#### 12. Methodology note: an AI-augmented, consumer-hardware research apparatus
 
 This work was produced by a small human-led, agentic-AI research process, and we report the methodology in the
 same spirit of disclosure as the results, because *how* it was done is part of what it demonstrates.
@@ -811,7 +1060,7 @@ intermediate conclusions); the two are reconciled only by a disciplined human-in
 exactly the kind we document here. We disclose AI use explicitly, in keeping with emerging journal norms on
 AI-assisted research and authorship [NatureAI23].
 
-## Author contributions and AI transparency statement
+#### Author contributions and AI transparency statement
 
 C.R. (Cristian Ruvalcaba) conceived and directed the study, made all substantive judgments, validated every
 claim, and is solely accountable for the contents. The **Agentic AI Research Team** (a large-language-model
@@ -823,7 +1072,7 @@ transfer scientific responsibility, which remains with the human author. No clai
 treated as established solely because an AI produced it; the human-validated, reproducible artifacts (code,
 data, and this disclosure) are the basis for trust.
 
-## Data and code availability
+#### Data and code availability
 
 DNS solver, JHTDB pipeline (`sciserver_cutout.py`), the coarse-graining experiment of §6.1
 (`coarse_grain_run.py`), the 1D OSW model solver (`osw_1d.py`, `osw_frontier.py`), analysis and batch-means
@@ -832,7 +1081,7 @@ at **https://github.com/saluca-labs/navier-stokes**. JHTDB datasets are public
 [JHTDB08]; the geometric-depletion statistic, the per-snapshot audit of §6, and the §6.1 bias measurement are
 reproducible from them.
 
-## Changes in v0.6 (2026-07-01)
+#### Changes in v0.6 (2026-07-01)
 
 This revision follows an independent adversarial verification pass (ten agents: five verifying every reference
 against its primary record, five briefed to refute each derived claim, with code audit) and one new
@@ -848,7 +1097,7 @@ the top-$1\%$ ratio); $t$-corrected intervals throughout; estimand and single-sn
 entries in the §12 integrity ledger. The central below-unity result is unchanged and strengthened by the
 measured systematic.
 
-## References
+#### References
 
 - [Leray34] J. Leray, *Sur le mouvement d'un liquide visqueux emplissant l'espace*, Acta Math. **63** (1934) 193–248. doi:10.1007/BF02547354
 - [BKM84] J.T. Beale, T. Kato, A. Majda, *Remarks on the breakdown of smooth solutions for the 3-D Euler equations*, Comm. Math. Phys. **94** (1984) 61–66. doi:10.1007/BF01212349
@@ -875,9 +1124,9 @@ measured systematic.
 
 ## code/RESULTS.md
 
-# Experiments — results log
+### Experiments — results log
 
-## E1. Dyadic shell-model dissipation threshold (2026-06-21) ✅
+#### E1. Dyadic shell-model dissipation threshold (2026-06-21) ✅
 `shell_model.py` — reproduces the failure-catalog dissipation threshold from scratch (N=22 shells,
 k_n=2^n, energy-conserving forward cascade, LSODA stiff integrator, enstrophy blow-up event).
 
@@ -892,7 +1141,7 @@ faster than dissipation can act; regularity = dissipation catching the front so 
 concrete face of the supercriticality story. Numerics note: explicit RK4 with N=36 (k~7e10) was too
 stiff (NaN); N=22 + LSODA + blow-up event is robust.
 
-## E2. Tao-delay concentration vs spreading (2026-06-21) — INSTRUCTIVE NEGATIVE
+#### E2. Tao-delay concentration vs spreading (2026-06-21) — INSTRUCTIVE NEGATIVE
 `e2_delay.py` — conservative gated dyadic (amplitude form). At SAME viscosity (ν=1e-3, γ=0.5):
 spreading REGULAR (spread 1.59), naive-gate concentration also REGULAR (spread 1.38). Inviscid: gate
 blows up LATER (t=2.72) than spreading (t=1.69) → **the naive "sequence-after-predecessor-depletes"
@@ -905,7 +1154,7 @@ at shell j ⇒ total viscous dissipation ~Σ k_j^{2γ−1}, which CONVERGES (pac
 γ<½**, vs spreading's ~⅖. ⇒ predicted clean window **γ∈(0.4,0.5): complete-transfer concentration blows
 up where spreading is regular.** This is why Tao needed a self-replicating "machine," not a gate.
 
-## E2b. Complete-transfer relay (2026-06-21) — window is ASYMPTOTIC, not visible at N=22
+#### E2b. Complete-transfer relay (2026-06-21) — window is ASYMPTOTIC, not visible at N=22
 `e2b_relay.py` — self-driven flux F_n=k_n e_n^{3/2} (complete transfer, no gate). Front-based blow-up
 (front→top shell). Front-threshold γ-scan: **relay and spreading BOTH blow up for γ≤0.40, both regular
 for γ≥0.42** at N=22 — the predicted γ∈(0.4,0.5) separation did NOT appear. The heuristic (relay
@@ -918,7 +1167,7 @@ asymptotic — needs N≥40 + an exponential/integrating-factor integrator (E2c)
 E2/E2b: finer claim is asymptotic; deferred (E2c) in favor of real-equation DNS (D1). Lesson banked:
 demonstrating threshold *gaps* in shell models is a large-N effect, not a few-shell one.
 
-### Next on this track
+##### Next on this track
 - **E2 — Tao's delay variant:** add a delay forcing near-complete a_j→a_{j+1} transfer (kills the
   regularizing energy-spreading) → should force BLOW-UP even at γ=0.5. Directly demonstrates the catalog's
   "Tao had to insert a delay to destroy the regularizing spreading effect."
@@ -927,7 +1176,7 @@ demonstrating threshold *gaps* in shell models is a large-N effect, not a few-sh
 - **E4 — threshold scan:** sweep γ to locate the numerical regular/blow-up boundary; compare to the
   theoretical γ≥2/5 (physical) / 5D-scaling threshold.
 
-## E2c. Threshold gap vs resolution (2026-06-21) — qualitative yes, quantitative murky
+#### E2c. Threshold gap vs resolution (2026-06-21) — qualitative yes, quantitative murky
 `e2c_highres.py`, N=34. A NARROW real window: at γ=0.36 relay BLOW-UP while spread REGULAR ⇒ concentration
 is more singular ✓ (qualitative "spreading regularizes"). BUT gap is 1 grid-step wide AND absolute
 thresholds DROPPED with N (0.42@N22 → ~0.37@N34) — opposite of the "→½" heuristic, because more shells =
@@ -936,16 +1185,16 @@ is N-biased). **Verdict:** qualitative claim confirmed; a clean quantitative gap
 integrator at N≫40 + a front-velocity blow-up test. SHELL-MODEL TRACK CLOSED for now (3 experiments;
 E1 solid, E2/E2b/E2c corrected my predictions — the lab's real value). DNS (D1) is the instrument forward.
 
-## D1. GPU pseudospectral DNS — real 3D Navier-Stokes ✅ (2026-06-21)
+#### D1. GPU pseudospectral DNS — real 3D Navier-Stokes ✅ (2026-06-21)
 `dns_spectral.py` — PyTorch FFT pseudospectral solver on the RTX 5090 (rotational form, 2/3 dealias,
 Leray projection, RK4). Taylor-Green vortex, 128^3, Re=100. **VALIDATED:** max|div u|~1e-7 (div-free),
 energy monotone decay 0.125->0.026, **enstrophy peaks at t≈5** (textbook TG), max|ω| (BKM) peaks ~5.8
 then bounded (regular at Re=100). **171 steps/s at 128^3** (1000 steps / 5.9s). We have a correct DNS of
 the actual equation as a local instrument.
-### Next on DNS: crank Re (lower nu) + resolution; instrument vorticity-direction coherence
+##### Next on DNS: crank Re (lower nu) + resolution; instrument vorticity-direction coherence
 (Constantin-Fefferman geometric depletion), the BKM integral ∫max|ω|dt, and the energy spectrum.
 
-## D2. Instrumented DNS — Taylor-Green Re=1600, 256^3 ✅✅ (2026-06-21) — THE science run
+#### D2. Instrumented DNS — Taylor-Green Re=1600, 256^3 ✅✅ (2026-06-21) — THE science run
 `dns_instrumented.py`, 2000 steps / **85s** on the 5090. Reproduced two celebrated structural results
 from scratch AND measured the catalog's candidate regularizer:
 
@@ -966,14 +1215,14 @@ from scratch AND measured the catalog's candidate regularizer:
 (Spectrum normalization is unnormalized = shape only; shows a developed cascade k=2..32, no high-k pileup
 = resolved. Fix normalization later.)
 
-### THE research question this opens (D3)
+##### THE research question this opens (D3)
 **How does the geometric-depletion factor scale with Re?** If depletion STRENGTHENS (depl→0) as Re→∞, the
 structure self-regulates and suppresses blow-up (evidence for regularity). If it WEAKENS (depl→O(1)), the
 nonlinearity de-depletes at high Re (evidence toward singularity). This is a real, crux-of-the-problem
 measurement we can run: Re-scan of depl at fixed resolution-adequacy. The catalog said vorticity geometry
 is the open door; D3 quantifies whether that door opens or closes with Re.
 
-## D3. Geometric-depletion Re-scan ✅ (2026-06-21) — the crux measurement, part 1
+#### D3. Geometric-depletion Re-scan ✅ (2026-06-21) — the crux measurement, part 1
 `d3_rescan.py`, resolution-matched Taylor-Green (k_max·η≈1.0-1.45, all adequately resolved). Mean
 geometric depletion `<ω·Sω>/<|ω|²|S|>` at the enstrophy peak:
   Re=400 (128³): 0.117 | Re=800 (192³): 0.106 | Re=1600 (256³): 0.098.
@@ -984,7 +1233,7 @@ Fefferman). CAVEATS: 3 points ≠ scaling law (~16% drop; could saturate); k_max
 high-Re work (Buaria-Pumir-Bodenschatz) finds extremes may DE-deplete even as the mean depletes — the
 knife-edge. ⇒ D4.
 
-## D4. Mean vs EXTREME-tail depletion vs Re ✅ (2026-06-21) — reached the resolution frontier
+#### D4. Mean vs EXTREME-tail depletion vs Re ✅ (2026-06-21) — reached the resolution frontier
 `d4_extreme.py`. Depletion conditioned on top-q |ω| at the enstrophy peak:
   Re=400(kmη1.45): mean .126 | t1% .110 | t0.1% .014 | t0.01% -.019   (LAMINAR — tail = TG sheets, ignore)
   Re=800(kmη1.29): mean .106 | t1% .108 | t0.1% .143 | t0.01% .217   (extremes DE-deplete: tail ~2× mean)
@@ -1000,7 +1249,7 @@ under-resolution — **this is the exact frontier wall that keeps the problem op
 TRUSTWORTHY extreme-tail point — push the 5090 to its edge (free ollama, ~15-20min). Below that resolution,
 the extreme-event verdict is not honestly obtainable.
 
-## D5. Decisive well-resolved 512³ Re=3200 ✅ (2026-06-21) — extreme-tail verdict
+#### D5. Decisive well-resolved 512³ Re=3200 ✅ (2026-06-21) — extreme-tail verdict
 `d5_decisive.py`, 512³ Re=3200, **k_max·η=1.14** (well-resolved), 48-min run on the 5090, ollama auto-restored.
 mean=0.096, top1%=0.092, top0.1%=0.083, **top0.01%=0.094** vs under-resolved 384³ tail 0.099 (kmη0.86).
 **VERDICT: well-resolved tail (0.094) ≈ under-resolved (0.099) ⇒ under-resolution was NOT clipping the tail;
@@ -1012,7 +1261,7 @@ asymptotic regime is the remaining frontier. **NS DNS arc complete (D1-D5): vali
 vorticity alignment + geometric depletion → measured its Re-trend (mean & resolved extremes → regularity up
 to Re=3200) → hit/named the asymptotic resolution frontier.**
 
-## D6. FRONTIER ROUTE OPEN — diagnostics on JHTDB high-Re DNS ✅ (2026-06-21)
+#### D6. FRONTIER ROUTE OPEN — diagnostics on JHTDB high-Re DNS ✅ (2026-06-21)
 `ns_jhtdb.py` (givernylocal; pyJHTDB deprecated). Queried 2000 velocity-gradient points from JHU's
 `isotropic1024coarse` (Re_λ~433, effectively ≫ our TG Re=3200), public testing token, 8s. Geometric
 depletion on REAL high-Re turbulence: **mean=0.126, top1%=0.113** (extreme tail BELOW mean ⇒ extremes more
@@ -1022,7 +1271,7 @@ noisy); different flow (forced isotropic vs decaying TG) so absolute values not 
 **DEFINITIVE extreme-tail (top 0.01% ~ needs 1e6 pts) requires: free registered JHTDB/SciServer token + a
 batched downloader.** Diagnostic pipeline (gradient→S,ω→depletion+tail) validated and ready.
 
-## D8 — SciServer LOCAL run (`sciserver_depletion.py` / `analyze_pool.py`), 2026-06-22 — frontier opened
+#### D8 — SciServer LOCAL run (`sciserver_depletion.py` / `analyze_pool.py`), 2026-06-22 — frontier opened
 Inside the SciServer Compute container `_salucaTurbulence` ([[jhtdb-sciserver]]) the JHTDB DNS is mounted local;
 `giverny` reads it at **~1.4s / 4096-pt call (~12x faster/pt than the web API)**. Testing token still caps
 4096 pts/call (client-side policy), so we chunk; a free token lifts it. **Baseline confirm (isotropic1024coarse,
@@ -1056,7 +1305,7 @@ ratio INVERTED above 1** vs 0.77 at Re_λ~433 (the de-depletion onset; needs ~1M
 `depletion_ratio_vs_Re.png` (tail/mean vs quantile w/ 1.0 threshold); baseline Re_λ~433 drawn, overlay high-Re
 when it lands. See [[jhtdb-sciserver]].
 
-## D7 — BATCHED JHTDB extreme-tail (`d7_jhtdb_batch.py`), 2026-06-21 — the named next step, executed
+#### D7 — BATCHED JHTDB extreme-tail (`d7_jhtdb_batch.py`), 2026-06-21 — the named next step, executed
 Pushed D6 from a 2000-pt proof-of-pipeline to a **60,000-point pool** on the same public testing token by
 batching small calls across **11 independent time-slices** (t=0..10, fresh turbulence realizations) of
 isotropic1024coarse (Re_λ~433). Durable/resumable: pool persisted to `_d7_pool.npz` every batch (survives the
@@ -1080,7 +1329,7 @@ the Buaria–Pumir de-depletion band) — JHTDB has no isotropic set that high, 
 registered-token deep pull on isotropic1024 + checking the higher-Re forced/channel sets. Pipeline + batching
 proven; the only gate to the definitive top-0.01% answer is token quota, not method.
 
-## (superseded) Open / GPU track
+#### (superseded) Open / GPU track
 - **D1 — GPU pseudospectral DNS** of real 3D incompressible NS (jax-cfd or torch-FFT spectral) on the 5090:
   instrument vorticity-direction coherence (Constantin-Fefferman geometric depletion) + energy spectrum,
   probe whether the "finer structure" (vorticity differential operators / energy-spreading) is measurable.
