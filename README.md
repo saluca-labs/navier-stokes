@@ -112,7 +112,8 @@ matplotlib 3.10.9. There is no package; clone and install what the script you wa
 ```bash
 git clone https://github.com/saluca-labs/navier-stokes
 cd navier-stokes
-python -m pip install numpy scipy matplotlib     # shell model, 1D OSW model, analysis, figures
+# for the shell model, the 1D OSW model, the analysis and the figures:
+python -m pip install numpy scipy matplotlib
 ```
 
 - **DNS** (`dns_spectral.py`, `dns_instrumented.py`, `d3_rescan.py`, `d4_extreme.py`,
@@ -132,7 +133,7 @@ python code/shell_model.py
 ```
 
 Last lines of the output from a run on 2026-10-22 (full capture in
-[`docs/img/shell-model-threshold-2026-10-22.txt`](docs/img/shell-model-threshold-2026-10-22.txt)):
+[`docs/img/shell-model-threshold-2026-10-22.out`](docs/img/shell-model-threshold-2026-10-22.out)):
 
 ```
 === verdict ===
@@ -286,7 +287,7 @@ statistic and the per-snapshot audit are reproducible directly from them - no pr
 ![Terminal output of code/shell_model.py: the inviscid and subcritical cases blow up at t about 1.69, the supercritical case stays regular to t=40 with the cascade front stalled at shell 12](docs/img/shell-model-threshold-2026-10-22.png)
 
 Captured 2026-10-22 from a clean clone; command and captured text in
-[`docs/img/shell-model-threshold-2026-10-22.txt`](docs/img/shell-model-threshold-2026-10-22.txt).
+[`docs/img/shell-model-threshold-2026-10-22.out`](docs/img/shell-model-threshold-2026-10-22.out).
 
 ## Provenance & method
 

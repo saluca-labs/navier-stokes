@@ -32,7 +32,7 @@ extreme vorticity tail" (v0.6). Research scripts that produced the paper's numbe
   [`paper/geometric_depletion_paper.md`](paper/geometric_depletion_paper.md), sections 6 and 6.1.
   The README's "Main result (v0.6)" restates it.
 - The shell-model verdict: [`code/RESULTS.md`](code/RESULTS.md) experiment E1, reproduced by
-  `python code/shell_model.py` (captured in `docs/img/shell-model-threshold-2026-10-22.txt`).
+  `python code/shell_model.py` (captured in `docs/img/shell-model-threshold-2026-10-22.out`).
 - Not to trust: any v0.5 statement that the cross-Reynolds difference is "statistically resolved"
   (withdrawn in v0.6), the title string in `code/plot_crossRe.py`, and the Fig. 2 bands, which use
   `1.96` rather than the t multiplier (see the README's reproduction notes).
