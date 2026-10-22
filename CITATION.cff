@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the associated preprint."
+title: "Geometric depletion of enstrophy production in the extreme vorticity tail - reproducibility code"
+authors:
+  - family-names: Ruvalcaba
+    given-names: Cristian
+    affiliation: Saluca Labs
+  - name: "Saluca Agentic AI Research Team"
+doi: 10.5281/zenodo.20970675
+repository-code: "https://github.com/saluca-labs/navier-stokes"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.20970675
+    description: "Zenodo concept DOI for the preprint (resolves to the latest version)"
+license: MIT
+date-released: 2026-07-01
+keywords:
+  - navier-stokes
+  - turbulence
+  - geometric depletion
+  - JHTDB
+  - reproducibility
+preferred-citation:
+  type: article
+  title: "Geometric depletion of enstrophy production in the extreme vorticity tail: a Reynolds-number study toward the Navier-Stokes regularity question"
+  authors:
+    - family-names: Ruvalcaba
+      given-names: Cristian
+      affiliation: Saluca Labs
+    - name: "Saluca Agentic AI Research Team"
+  doi: 10.5281/zenodo.20970675
+  year: 2026
+  publisher:
+    name: Zenodo

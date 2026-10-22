@@ -1,0 +1,28 @@
+# navier-stokes
+
+> Reproducibility package for the paper "Geometric depletion of enstrophy production in the extreme vorticity tail: a Reynolds-number study toward the Navier-Stokes regularity question" (Cristian Ruvalcaba and the Saluca Agentic AI Research Team, v0.6, 2026; Zenodo concept DOI 10.5281/zenodo.20970675). Code MIT; the preprint is CC-BY-4.0 on Zenodo.
+
+This is a set of research scripts, not a library. It does not claim to settle Navier-Stokes regularity. The v0.6 result: extreme-tail depletion is below unity at both R_lambda about 1300 and 2500, and the cross-Reynolds weakening is NOT statistically resolved at top-1% after the measured resolution bias (the v0.5 "statistically resolved" claim was withdrawn). The DNS needs a CUDA GPU (no CPU fallback); the production pipeline needs JHTDB access via giverny/SciServer; the per-point pools (.npz) are not in the repo. shell_model.py and osw_1d.py run on a CPU with numpy and scipy.
+
+## Docs
+
+- [README](https://github.com/saluca-labs/navier-stokes/blob/master/README.md): status and correction, install, quickstart, usage, data access
+- [Paper (Markdown)](https://github.com/saluca-labs/navier-stokes/blob/master/paper/geometric_depletion_paper.md): the v0.6 paper, including its change log
+- [code/RESULTS.md](https://github.com/saluca-labs/navier-stokes/blob/master/code/RESULTS.md): dated log of the exploratory experiments (shell model, DNS, scans)
+
+## Code
+
+- [code/sciserver_cutout.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/sciserver_cutout.py): production JHTDB cutout pipeline producing the depletion pools
+- [code/coarse_grain_run.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/coarse_grain_run.py): v0.6 paired coarse-graining experiment measuring the resolution bias
+- [code/block_uncertainty.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/block_uncertainty.py): contiguous-block batch-means t-intervals on a pool
+- [code/master_ns_run.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/master_ns_run.py): resumable orchestrator for the cross-Reynolds runs
+- [code/dns_spectral.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/dns_spectral.py): GPU pseudospectral DNS (Taylor-Green validation)
+- [code/shell_model.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/shell_model.py): dyadic shell-model dissipation threshold (CPU, seconds)
+- [code/osw_1d.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/osw_1d.py): 1D OSW model family, advection vs blow-up (CPU)
+
+## Optional
+
+- [CITATION.cff](https://github.com/saluca-labs/navier-stokes/blob/master/CITATION.cff): how to cite
+- [Zenodo record](https://doi.org/10.5281/zenodo.20970675): the archived preprint
+- [Paper (PDF)](https://github.com/saluca-labs/navier-stokes/blob/master/paper/geometric_depletion_paper.pdf): typeset v0.6
+- [llms-full.txt](https://github.com/saluca-labs/navier-stokes/blob/master/llms-full.txt): README, paper and RESULTS.md in one file
