@@ -305,7 +305,13 @@ version. [`CITATION.cff`](CITATION.cff) carries the same DOI.
 
 ## License
 
-[MIT](LICENSE) (SPDX `MIT`) © 2026 Cristian Ruvalcaba / Saluca Labs.
+Split by path, declared file by file in [`REUSE.toml`](REUSE.toml) ([REUSE](https://reuse.software)
+layout; the licence texts are in [`LICENSES/`](LICENSES/)):
+
+- **Code and repository docs** (`code/*.py`, README, AGENTS.md, llms.txt, `docs/`): **MIT**, see
+  [`LICENSE`](LICENSE). Copyright 2026 Cristian Ruvalcaba / Saluca Labs.
+- **Paper and results** (`paper/`, and the result logs `code/RESULTS.md`, `code/osw_results*.md`,
+  `code/osw_frontier_results.md`): **CC-BY-4.0**, the licence of the Zenodo record.
 
 ## Links
 

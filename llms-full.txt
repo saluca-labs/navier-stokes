@@ -1,6 +1,6 @@
 # navier-stokes
 
-> Reproducibility package for the paper "Geometric depletion of enstrophy production in the extreme vorticity tail: a Reynolds-number study toward the Navier-Stokes regularity question" (Cristian Ruvalcaba and the Saluca Agentic AI Research Team, v0.6, 2026; Zenodo concept DOI 10.5281/zenodo.20970675). Code MIT; the preprint is CC-BY-4.0 on Zenodo.
+> Reproducibility package for the paper "Geometric depletion of enstrophy production in the extreme vorticity tail: a Reynolds-number study toward the Navier-Stokes regularity question" (Cristian Ruvalcaba and the Saluca Agentic AI Research Team, v0.6, 2026; Zenodo concept DOI 10.5281/zenodo.20970675). Code MIT; the paper and result logs CC-BY-4.0 (the Zenodo record's licence), declared by path in REUSE.toml.
 
 This is a set of research scripts, not a library. It does not claim to settle Navier-Stokes regularity. The v0.6 result: extreme-tail depletion is below unity at both R_lambda about 1300 and 2500, and the cross-Reynolds weakening is NOT statistically resolved at top-1% after the measured resolution bias (the v0.5 "statistically resolved" claim was withdrawn). The DNS needs a CUDA GPU (no CPU fallback); the production pipeline needs JHTDB access via giverny/SciServer; the per-point pools (.npz) are not in the repo. shell_model.py and osw_1d.py run on a CPU with numpy and scipy.
 
@@ -317,7 +317,13 @@ version. [`CITATION.cff`](CITATION.cff) carries the same DOI.
 
 #### License
 
-[MIT](LICENSE) (SPDX `MIT`) © 2026 Cristian Ruvalcaba / Saluca Labs.
+Split by path, declared file by file in [`REUSE.toml`](REUSE.toml) ([REUSE](https://reuse.software)
+layout; the licence texts are in [`LICENSES/`](LICENSES/)):
+
+- **Code and repository docs** (`code/*.py`, README, AGENTS.md, llms.txt, `docs/`): **MIT**, see
+  [`LICENSE`](LICENSE). Copyright 2026 Cristian Ruvalcaba / Saluca Labs.
+- **Paper and results** (`paper/`, and the result logs `code/RESULTS.md`, `code/osw_results*.md`,
+  `code/osw_frontier_results.md`): **CC-BY-4.0**, the licence of the Zenodo record.
 
 #### Links
 
