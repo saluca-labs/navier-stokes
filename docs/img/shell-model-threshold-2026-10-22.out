@@ -1,0 +1,23 @@
+Captured 2026-10-22 from a clean clone of saluca-labs/navier-stokes (branch from origin/master).
+Python 3.12.10, numpy 2.4.6, scipy 1.17.1, PYTHONIOENCODING=utf-8, CPU only.
+Command, run from the repository root (the '$ ' line in the image is this command; every other line is the unedited output):
+  python code/shell_model.py
+Rendered with rich Console(record=True).save_svg, then headless Chromium (playwright) to PNG, ligatures off.
+
+----- captured text -----
+$ python code/shell_model.py
+Dyadic shell model — dissipation-threshold experiment (k_n=2^n, N=22 shells)
+
+inviscid          (nu=0)         -> expect BLOW-UP (Katz-Pavlovic)
+  [inviscid] BLOW-UP at t=1.692: enstrophy(H1)->1e+10, cascade front at shell 21/22
+
+subcritical visc  (nu=1e-3,g=.15) -> expect BLOW-UP (g<1/4)
+  [subcritical] BLOW-UP at t=1.694: enstrophy(H1)->1e+10, cascade front at shell 21/22
+
+supercritical vis (nu=1e-3,g=.50) -> expect REGULAR (g>2/5)
+  [supercritical] REGULAR to t=40.0: H1=7.646e+01 bounded, front stalled at shell 12/22
+
+=== verdict ===
+  gamma=0.00: BLOW-UP (t_end=1.6924)
+  gamma=0.15: BLOW-UP (t_end=1.6942)
+  gamma=0.50: REGULAR (t_end=40.0000)
