@@ -1,3 +1,5 @@
+![navier-stokes](docs/img/banner-2026-10-23.jpg)
+
 # Geometric depletion of enstrophy production in the extreme vorticity tail
 
 **A Reynolds-number study toward the Navier-Stokes regularity question.** Reproducibility package
