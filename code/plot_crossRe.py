@@ -2,15 +2,17 @@ r"""plot_crossRe.py — Fig 2: conditional geometric-depletion ratio D(q)/D_mean
 two high-Reynolds JHTDB datasets, with block-resampled 95% bands. Claimed depth = top-0.1%; deeper points are
 drawn faded (resolution-limited, §3.2). Saves paper/depletion_crossRe.png.
 """
+import os
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-DL = r"C:\Users\crist\Downloads"
+# Directory holding the two pool_cutout_*.npz files (set NS_POOL_DIR; defaults to the current directory).
+DL = os.environ.get("NS_POOL_DIR", ".")
 SETS = [
-    (DL + r"\pool_cutout_isotropic8192(2).npz",  r"isotropic8192  ($R_\lambda\approx1300$, $k_{max}\eta\approx1.4$)", "#1f77b4"),
-    (DL + r"\pool_cutout_isotropic32768(2).npz", r"isotropic32768 ($R_\lambda=2500$, $k_{max}\eta\approx2.8$)",     "#d62728"),
+    (os.path.join(DL, "pool_cutout_isotropic8192(2).npz"),  r"isotropic8192  ($R_\lambda\approx1300$, $k_{max}\eta\approx1.4$)", "#1f77b4"),
+    (os.path.join(DL, "pool_cutout_isotropic32768(2).npz"), r"isotropic32768 ($R_\lambda=2500$, $k_{max}\eta\approx2.8$)",     "#d62728"),
 ]
 QS = [0.5, 0.2, 0.1, 0.05, 0.02, 0.01, 0.005, 0.002, 0.001, 0.0005, 0.0001]
 CLAIM = 0.001  # top-0.1% : claimed depth; deeper = faded
@@ -54,6 +56,6 @@ ax.set_title(r"Extreme-tail geometric depletion weakens with Reynolds number")
 ax.set_ylim(0.70, 1.04); ax.legend(loc="lower left", fontsize=8.5, framealpha=0.9)
 ax.grid(True, which="both", alpha=0.25)
 fig.tight_layout()
-out = r"C:\AI\navier-stokes\paper\depletion_crossRe.png"
+out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "paper", "depletion_crossRe.png")
 fig.savefig(out, dpi=150)
 print("saved", out)

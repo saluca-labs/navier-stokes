@@ -1,0 +1,60 @@
+# navier-stokes
+
+> Reproducibility package for the paper "Geometric depletion of enstrophy production in the extreme vorticity tail: a Reynolds-number study toward the Navier-Stokes regularity question" (Cristian Ruvalcaba and the Saluca Agentic AI Research Team, v0.6, 2026; Zenodo concept DOI 10.5281/zenodo.20970675). Code MIT; the paper and result logs CC-BY-4.0 (the Zenodo record's licence), declared by path in REUSE.toml.
+
+This is a set of research scripts, not a library. It does not claim to settle Navier-Stokes regularity. The v0.6 result: extreme-tail depletion is below unity at both R_lambda about 1300 and 2500, and the cross-Reynolds weakening is NOT statistically resolved at top-1% after the measured resolution bias (the v0.5 "statistically resolved" claim was withdrawn). The DNS needs a CUDA GPU (no CPU fallback); the production pipeline needs JHTDB access via giverny/SciServer; the per-point pools (.npz) are not in the repo. shell_model.py and osw_1d.py run on a CPU with numpy and scipy.
+
+The scripts listed under "Code" are the complete public surface: there is no package, no installed command, no API and no test suite. If a script, command or option is not listed here or in the README's Usage table, it does not exist. Known discrepancy (2026-10-22): code/plot_crossRe.py draws the Fig. 2 bands with 1.96 rather than the t multiplier the v0.6 paper uses for its table.
+
+## Start here
+
+- [README](https://github.com/saluca-labs/navier-stokes/blob/master/README.md): status and correction, how-it-works diagram, install, quickstart, usage, data access, what is and is not in the repo
+- [AGENTS.md](https://github.com/saluca-labs/navier-stokes/blob/master/AGENTS.md): orientation for agents: read order, what you can and cannot see, the only numbers to trust
+- [docs/README.md](https://github.com/saluca-labs/navier-stokes/blob/master/docs/README.md): map of every document, grouped by intent
+
+## The result, in depth
+
+- [Paper (Markdown)](https://github.com/saluca-labs/navier-stokes/blob/master/paper/geometric_depletion_paper.md): the v0.6 paper, including section 6.1 (resolution bias) and its change log
+- [code/RESULTS.md](https://github.com/saluca-labs/navier-stokes/blob/master/code/RESULTS.md): dated log of the exploratory experiments (shell model, DNS, scans)
+
+## Code
+
+Production pipeline (JHTDB access through giverny or givernylocal):
+
+- [code/master_ns_run.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/master_ns_run.py): resumable orchestrator; runs fd_vs_spectral.py then sciserver_cutout.py per dataset as subprocesses and writes MASTER_RESULTS.md; exits unless JHTDB_TOKEN is set
+- [code/fd_vs_spectral.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/fd_vs_spectral.py): paired FD vs spectral gradient check of the tail (`--probe`, `--nbox N`); giverny only
+- [code/sciserver_cutout.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/sciserver_cutout.py): production cutout pipeline; writes pool_cutout_<dataset>.npz (env DATASET, B, NBOX)
+- [code/coarse_grain_run.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/coarse_grain_run.py): v0.6 paired coarse-graining experiment measuring the resolution bias (`--analyze`, `--selftest`)
+- [code/sciserver_depletion.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/sciserver_depletion.py): earlier random-point getData pipeline; writes pool_<dataset>.npz
+- [code/ns_jhtdb.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/ns_jhtdb.py): depletion diagnostics on JHTDB isotropic1024coarse (R_lambda about 433) through givernylocal
+- [code/d7_jhtdb_batch.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/d7_jhtdb_batch.py): batched public testing-token accumulation on isotropic1024coarse into a git-ignored _d7_pool.npz
+
+Analysis and figures (CPU):
+
+- [code/block_uncertainty.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/block_uncertainty.py): contiguous-block batch-means t-intervals on a pool (`<pool.npz> <label> [K]`)
+- [code/analyze_pool.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/analyze_pool.py): tail/mean ratio curve on a pool (`<pool.npz> [label]`)
+- [code/plot_crossRe.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/plot_crossRe.py): redraws paper/depletion_crossRe.png from two pools in NS_POOL_DIR (expects filenames with a "(2)" suffix)
+- [code/plot_depletion.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/plot_depletion.py): ratio-vs-quantile plot for any pools given as `POOL.npz label` pairs
+
+GPU DNS (PyTorch with CUDA, no CPU fallback):
+
+- [code/dns_spectral.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/dns_spectral.py): pseudospectral DNS, Taylor-Green validation (`[N] [nu] [T]`)
+- [code/dns_instrumented.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/dns_instrumented.py): DNS with production, alignment and BKM diagnostics (`[N] [Re] [T]`)
+- [code/d3_rescan.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/d3_rescan.py): depletion Reynolds-number rescan
+- [code/d4_extreme.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/d4_extreme.py): extreme-tail percentile scan; defines run_case
+- [code/d5_decisive.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/d5_decisive.py): one 512^3 Re=3200 run via d4_extreme.run_case; optional NS_AFTER_CMD
+
+Model problems (CPU):
+
+- [code/shell_model.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/shell_model.py): dyadic shell-model dissipation threshold (seconds)
+- [code/e2_delay.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/e2_delay.py), [code/e2b_relay.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/e2b_relay.py), [code/e2c_highres.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/e2c_highres.py): shell-model delay, relay and resolution variants (RESULTS.md E2, E2b, E2c)
+- [code/osw_1d.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/osw_1d.py): 1D OSW model family, advection vs blow-up (`--N`, `--T`, `--avals`, `--ic`); overwrites code/osw_results_<ic>.md
+- [code/osw_frontier.py](https://github.com/saluca-labs/navier-stokes/blob/master/code/osw_frontier.py): low-Hölder data for De Gregorio (`--a`, `--alphas`, `--N`, `--T`, `--converge`); overwrites code/osw_frontier_results.md
+
+## Optional
+
+- [CITATION.cff](https://github.com/saluca-labs/navier-stokes/blob/master/CITATION.cff): how to cite
+- [Zenodo record](https://doi.org/10.5281/zenodo.20970675): the archived preprint (concept DOI)
+- [Paper (PDF)](https://github.com/saluca-labs/navier-stokes/blob/master/paper/geometric_depletion_paper.pdf): typeset v0.6
+- [Archived OSW results](https://github.com/saluca-labs/navier-stokes/blob/master/code/osw_results_sin.md): one of the code/osw_*results*.md run logs
+- [llms-full.txt](https://github.com/saluca-labs/navier-stokes/blob/master/llms-full.txt): README, AGENTS.md, docs/README.md, the paper and code/RESULTS.md in one file
