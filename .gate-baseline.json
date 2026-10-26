@@ -1,6 +1,6 @@
 {
  "version": 2,
- "written": "2026-10-22",
+ "written": "2026-10-26",
  "rule": "debt may only shrink; see repo-merge-gate.md GATE-3",
  "note": "ids are hashes of each finding; run `python -m gate run` to see them",
  "entries": [
@@ -11,28 +11,8 @@
   },
   {
    "check": "paths",
-   "id": "b82a694b624ec61f8309",
-   "path": "code/d5_decisive.py"
-  },
-  {
-   "check": "paths",
-   "id": "d2ab36e73167f88ac378",
-   "path": "code/d5_decisive.py"
-  },
-  {
-   "check": "paths",
    "id": "aa85a5f09781f3e09239",
    "path": "code/master_ns_run.py"
-  },
-  {
-   "check": "paths",
-   "id": "eeaad10211a570701bd9",
-   "path": "code/plot_crossRe.py"
-  },
-  {
-   "check": "paths",
-   "id": "2ebe12173aacd74fb859",
-   "path": "code/plot_crossRe.py"
   },
   {
    "check": "paths",
@@ -46,102 +26,7 @@
   },
   {
    "check": "style",
-   "id": "527a160cc5841f720299",
-   "path": "README.md"
-  },
-  {
-   "check": "style",
-   "id": "c785461d21ba51b1e602",
-   "path": "README.md"
-  },
-  {
-   "check": "style",
-   "id": "eeb53d88d5da02d5eb57",
-   "path": "README.md"
-  },
-  {
-   "check": "style",
-   "id": "e7ff0c8f77ca363f77e9",
-   "path": "README.md"
-  },
-  {
-   "check": "style",
    "id": "98ef2ac39ef2102047ed",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "3223c854e53d65d87891",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "6ea50f0e98beca115b4d",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "e04adf7ada65f450fed1",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "a2bbe155bd552e943156",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "710734807cdfc4489247",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "542c456713e311775a6b",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "eb818f92b76eeefce767",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "410cab3e1be22d6275ef",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "32395199a50bb3f992f0",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "8100da1f3028afc3c493",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "49413b04846952be273d",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "1171910e6c2c0414f174",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "69e1910fa6c4941d32c5",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "ab6ed65abaf6120502bd",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "745b386b58299cf5ef60",
    "path": "code/RESULTS.md"
   },
   {
@@ -151,42 +36,7 @@
   },
   {
    "check": "style",
-   "id": "a0ad92f4c9c007310fb1",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
    "id": "d7c75e1b3d08901ab5bb",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "4957ba8dc12f1e38c13d",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "05e6b8d4215ce61c15c5",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "f65adeeb3a54bff119c9",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "88f17595ae8d9f33023f",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "d56cc2adb94bd4119dd9",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "a368ba47252aec10d4a8",
    "path": "code/RESULTS.md"
   },
   {
@@ -196,37 +46,7 @@
   },
   {
    "check": "style",
-   "id": "e88334c4ca8d1db9c3c1",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "18193d69ddd20a40519a",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
    "id": "d1a843013ee0a1ace7c8",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "16643329478ffece87c6",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "54acb526f084d5be17a5",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "dfb9eaaa6468b48cb24a",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "98038f78f704ce93c13a",
    "path": "code/RESULTS.md"
   },
   {
@@ -236,22 +56,12 @@
   },
   {
    "check": "style",
-   "id": "0feb428b4b81d5618b57",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "3635ac6d4e6f6a475947",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
    "id": "2a430719e01d8d4354b4",
    "path": "code/RESULTS.md"
   },
   {
    "check": "style",
-   "id": "dc4ad91a8f5c95a5f620",
+   "id": "e85cc7f9e6937695bd93",
    "path": "code/RESULTS.md"
   },
   {
@@ -261,17 +71,32 @@
   },
   {
    "check": "style",
-   "id": "b7b528f02c45a59cd9be",
+   "id": "6ea50f0e98beca115b4d",
    "path": "code/RESULTS.md"
   },
   {
    "check": "style",
-   "id": "5156aa9d84e51e231f86",
+   "id": "a2bbe155bd552e943156",
    "path": "code/RESULTS.md"
   },
   {
    "check": "style",
-   "id": "34e120d0932ce2b72809",
+   "id": "69e1910fa6c4941d32c5",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "54acb526f084d5be17a5",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "410cab3e1be22d6275ef",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "49413b04846952be273d",
    "path": "code/RESULTS.md"
   },
   {
@@ -286,7 +111,157 @@
   },
   {
    "check": "style",
-   "id": "e85cc7f9e6937695bd93",
+   "id": "34e120d0932ce2b72809",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "a368ba47252aec10d4a8",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "9bdc560b815d521aa580",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "32395199a50bb3f992f0",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "8100da1f3028afc3c493",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "1171910e6c2c0414f174",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "f65adeeb3a54bff119c9",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "88f17595ae8d9f33023f",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "4957ba8dc12f1e38c13d",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "05e6b8d4215ce61c15c5",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "745b386b58299cf5ef60",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "16643329478ffece87c6",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "b7b528f02c45a59cd9be",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "98038f78f704ce93c13a",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "a0ad92f4c9c007310fb1",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "e04adf7ada65f450fed1",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "710734807cdfc4489247",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "3223c854e53d65d87891",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "e88334c4ca8d1db9c3c1",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "eb818f92b76eeefce767",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "dc4ad91a8f5c95a5f620",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "d56cc2adb94bd4119dd9",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "323ee0014c856b0abad1",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "542c456713e311775a6b",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "18193d69ddd20a40519a",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "3635ac6d4e6f6a475947",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "0ca808f6f4879fe53cb4",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "0feb428b4b81d5618b57",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "ab6ed65abaf6120502bd",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "5156aa9d84e51e231f86",
+   "path": "code/RESULTS.md"
+  },
+  {
+   "check": "style",
+   "id": "dfb9eaaa6468b48cb24a",
    "path": "code/RESULTS.md"
   },
   {
@@ -297,21 +272,6 @@
   {
    "check": "style",
    "id": "b2d22e2b7e2a0e71d1ff",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "323ee0014c856b0abad1",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "0ca808f6f4879fe53cb4",
-   "path": "code/RESULTS.md"
-  },
-  {
-   "check": "style",
-   "id": "9bdc560b815d521aa580",
    "path": "code/RESULTS.md"
   },
   {
@@ -336,132 +296,7 @@
   },
   {
    "check": "style",
-   "id": "1fdf0c989e48255f10e2",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "da4fc4a3a8ced262a5e1",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "840e1027f65958ba1cc2",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "53bd15cee320a872312e",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "f996f34e489e76bc9269",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "5c4ab35c794fed3647be",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "560d61f1f637ce9b04f4",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "46f8c9b4595658799464",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "1e20f851e062d6234d35",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "b7c995e15f7c637e5959",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "5e6bfb49d4b4d99f33d2",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "ef89fd506bea4108b0d3",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "f00f5a658fa779c74e5d",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "003ae9e0ad37cf4b1722",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "3a0df98dafb3698a43f2",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "486d47c23cf3df09159a",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "d48b04b7ea16756a0d91",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "5b7084a1ec79bad23d7c",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "11875db5ae95b9953d16",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "a186c56122811149311c",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "5cbe95107bda1151321b",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "b7750e2f676a9fa40649",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "cc6699c6c7bb1322f22f",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "656967473acea1d5b10d",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "8ae78986346c82209925",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "dbf0b1b9669ea57dc806",
+   "id": "99df1a93c01286116623",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -471,67 +306,7 @@
   },
   {
    "check": "style",
-   "id": "38f362213e31550e00a0",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "8b64c9495ca0aca69796",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
    "id": "1dd6f59349f6e212ae4e",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "2e25732bde3cb0d1c0d6",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "ac1255e9626fee1944a3",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "8acb040a86da13a0713b",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "99df1a93c01286116623",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "748668dfe73ab6e33807",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "4d7282d9959d29cc3888",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "f8c40f0b8f946cc040e7",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "ef226a0652b6b8030549",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "a340c8f805b096c994af",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "16666faae55007e6e4d7",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -541,137 +316,7 @@
   },
   {
    "check": "style",
-   "id": "18926968ff81377296df",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "c47715c616d1fd709452",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "2f924d6728a7969d8ab5",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "9332b7911c6e403ca284",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "3d0150e68b7ba80e27c2",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "c4056afe9493ea42bf6a",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "e4ac6b533b283b430138",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "97328c95374f5e406c39",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "989ccd9809f86e6239b4",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "bfb45d631252532c535d",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "fd8d998207d184a7632d",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "da37d3ba81894cbef035",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "a6bfe63b500473a60dd5",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "78447eb80c5e2adeee41",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "b15f75bee211e0422a5e",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "ab0dd5d547e39a3a9ceb",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "5c51cdb0bd4a19c28918",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "6e40edc235f03f6184a3",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "c75e878c56bd7919cd61",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "a6398ced355def33cf3d",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "615d7962fcd7409481bb",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "1e796eeb96a70e2bbebc",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "3a94294486c56fb6f855",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "26c43898690df3f885b8",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "c02869a09b0f74cd1ca4",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "de0d3db291beb8c11b4f",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "80a51ec638caf936f410",
+   "id": "560d61f1f637ce9b04f4",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -681,12 +326,7 @@
   },
   {
    "check": "style",
-   "id": "b1750578807e5ca53564",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "16556aac4d504850f004",
+   "id": "a186c56122811149311c",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -696,17 +336,22 @@
   },
   {
    "check": "style",
-   "id": "bb2a6bab7af4efbf820a",
+   "id": "bfb45d631252532c535d",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "f9d22ba4eaafa8199823",
+   "id": "16556aac4d504850f004",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "5197c009663504f34a7d",
+   "id": "003ae9e0ad37cf4b1722",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "b4862e876c4d2fa256f4",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -716,32 +361,27 @@
   },
   {
    "check": "style",
-   "id": "053298c204a4de738413",
+   "id": "18926968ff81377296df",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "c0722c83ab2e46124f4e",
+   "id": "ab0dd5d547e39a3a9ceb",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "1386c968fd7eecb49618",
+   "id": "c4056afe9493ea42bf6a",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "7768d6f397b56d9b9812",
+   "id": "b7750e2f676a9fa40649",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "e9bc4147fbc4584be271",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "69ee89dfdcb37157e598",
+   "id": "003d976d70a478b0b37b",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -761,11 +401,6 @@
   },
   {
    "check": "style",
-   "id": "b4862e876c4d2fa256f4",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
    "id": "d2754d23515dfd49af74",
    "path": "paper/geometric_depletion_paper.md"
   },
@@ -776,52 +411,32 @@
   },
   {
    "check": "style",
-   "id": "abf36fe2c62c5006a35f",
+   "id": "5c4ab35c794fed3647be",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "3f8c6c26b5817374abba",
+   "id": "5c51cdb0bd4a19c28918",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "78cbd362a077554dbe52",
+   "id": "f996f34e489e76bc9269",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "410eebac2a94eeea3ad5",
+   "id": "1e20f851e062d6234d35",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "79cffe94d4d2abc113f9",
+   "id": "1e796eeb96a70e2bbebc",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "9bda25e04fcfb1ed4863",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "3c2a4eb5d520d66da5f3",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "bafe0be24d2f8415eb1f",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "77bf4616c2e25a0cf493",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "d2264200ea1785878854",
+   "id": "2e25732bde3cb0d1c0d6",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -831,27 +446,12 @@
   },
   {
    "check": "style",
-   "id": "e8b6e19ed21613cc5145",
+   "id": "9bda25e04fcfb1ed4863",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "84503fd37db3da87208e",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "7494f6bbf087d04f63fc",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "77711f185815d4765684",
-   "path": "paper/geometric_depletion_paper.md"
-  },
-  {
-   "check": "style",
-   "id": "6bf9f89cf050265cc0f2",
+   "id": "c75e878c56bd7919cd61",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -861,12 +461,72 @@
   },
   {
    "check": "style",
-   "id": "5f41b6e2175492c454c9",
+   "id": "c47715c616d1fd709452",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
    "check": "style",
-   "id": "956429309978243e59a0",
+   "id": "8ae78986346c82209925",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "6e40edc235f03f6184a3",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "7768d6f397b56d9b9812",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "5b7084a1ec79bad23d7c",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "a6398ced355def33cf3d",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "1fdf0c989e48255f10e2",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "f00f5a658fa779c74e5d",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "5197c009663504f34a7d",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "da37d3ba81894cbef035",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "84503fd37db3da87208e",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "f9d22ba4eaafa8199823",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "3d0150e68b7ba80e27c2",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "8acb040a86da13a0713b",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -876,7 +536,307 @@
   },
   {
    "check": "style",
-   "id": "003d976d70a478b0b37b",
+   "id": "053298c204a4de738413",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "ef89fd506bea4108b0d3",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "9332b7911c6e403ca284",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "69ee89dfdcb37157e598",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "38f362213e31550e00a0",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "b15f75bee211e0422a5e",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "16666faae55007e6e4d7",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "78cbd362a077554dbe52",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "97328c95374f5e406c39",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "956429309978243e59a0",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "410eebac2a94eeea3ad5",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "a340c8f805b096c994af",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "dbf0b1b9669ea57dc806",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "6bf9f89cf050265cc0f2",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "989ccd9809f86e6239b4",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "abf36fe2c62c5006a35f",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "bb2a6bab7af4efbf820a",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "8b64c9495ca0aca69796",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "2f924d6728a7969d8ab5",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "840e1027f65958ba1cc2",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "bafe0be24d2f8415eb1f",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "615d7962fcd7409481bb",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "11875db5ae95b9953d16",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "46f8c9b4595658799464",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "3f8c6c26b5817374abba",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "da4fc4a3a8ced262a5e1",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "748668dfe73ab6e33807",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "3a0df98dafb3698a43f2",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "ef226a0652b6b8030549",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "e9bc4147fbc4584be271",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "d48b04b7ea16756a0d91",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "7494f6bbf087d04f63fc",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "cc6699c6c7bb1322f22f",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "3a94294486c56fb6f855",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "80a51ec638caf936f410",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "3c2a4eb5d520d66da5f3",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "a6bfe63b500473a60dd5",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "b7c995e15f7c637e5959",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "1386c968fd7eecb49618",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "ac1255e9626fee1944a3",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "e8b6e19ed21613cc5145",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "77bf4616c2e25a0cf493",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "fd8d998207d184a7632d",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "5f41b6e2175492c454c9",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "de0d3db291beb8c11b4f",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "e4ac6b533b283b430138",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "5cbe95107bda1151321b",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "486d47c23cf3df09159a",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "c02869a09b0f74cd1ca4",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "656967473acea1d5b10d",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "26c43898690df3f885b8",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "4d7282d9959d29cc3888",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "79cffe94d4d2abc113f9",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "c0722c83ab2e46124f4e",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "77711f185815d4765684",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "78447eb80c5e2adeee41",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "f8c40f0b8f946cc040e7",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "5e6bfb49d4b4d99f33d2",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "53bd15cee320a872312e",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "d2264200ea1785878854",
+   "path": "paper/geometric_depletion_paper.md"
+  },
+  {
+   "check": "style",
+   "id": "b1750578807e5ca53564",
    "path": "paper/geometric_depletion_paper.md"
   },
   {
@@ -887,46 +847,6 @@
   {
    "check": "claims",
    "id": "a59c86aa776f4a18c505",
-   "path": ""
-  },
-  {
-   "check": "docs",
-   "id": "b4d08d8b436c35746850",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "778c8d0a7ee6fb263adf",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "aafc68c653a507b6941e",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "bbb1f99b140392f1906f",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "6a102ada6b632910f355",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "7fcb8037f0cbaee52798",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "d1d18256ebd90ac25aa0",
-   "path": "README.md"
-  },
-  {
-   "check": "docs",
-   "id": "b79ed584daf8a632b453",
    "path": ""
   },
   {

@@ -4,10 +4,13 @@ At 512^3, Re=3200 gives k_max*eta ~ 1.5 (vs the under-resolved 0.86 at 384^3). C
 depletion (top 0.01% |omega|) at GOOD resolution against the under-resolved 384^3 value (0.099):
   tail_512 > 0.099  => under-resolution was clipping extremes; true tail DE-depletes (toward singularity).
   tail_512 ~ 0.099  => the fall-back was real (extremes re-deplete; toward regularity).
-If NS_AFTER_CMD is set, runs that command when done (the original run used it to restart a
-local service that shared the GPU). Run in background.
+If NS_AFTER_CMD is set, it is PRINTED when the run finishes as a reminder of the follow-up
+command (the original run used it to restart a local service that shared the GPU). It is not
+executed. Chain it in your own shell instead:
+
+    python code/d5_decisive.py && <your follow-up command>
 """
-import os, time, subprocess
+import os, time
 import d4_extreme as d4
 
 print("D5 — decisive 512^3 Re=3200 (well-resolved extreme tail)...", flush=True)
@@ -28,5 +31,9 @@ except Exception as e:
 finally:
     after = os.environ.get("NS_AFTER_CMD")
     if after:
-        subprocess.Popen(after, shell=True)
-        print("NS_AFTER_CMD started.", flush=True)
+        # Printed, not run. Handing an environment value to Popen makes this script an
+        # arbitrary-command hook, which is what semgrep's
+        # dangerous-subprocess-use-tainted-env-args catches; its only sanitizer is
+        # shlex.quote, and quoting is nonsense for a shell-free call. The follow-up is
+        # the caller's to run, so it stays visible here and executes nowhere.
+        print(f"NS_AFTER_CMD not executed, run it yourself: {after}", flush=True)
